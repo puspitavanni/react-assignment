@@ -8,6 +8,7 @@ import {
   Box,
   Badge,
   Button,
+  Flex,
 } from "@chakra-ui/react";
 import { Image } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
@@ -15,38 +16,56 @@ import { useSearchParams } from "react-router-dom";
 
 const Pagination = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentPage = 1; // TODO: replace this
+  const [currentPage, setCurrentPage] = useState(1); // TODO: replace this
 
   const moveTo = (direction) => {
     if (direction === "prev") {
       // TODO: answer here
+      setCurrentPage(currentPage - 1);
+      setSearchParams({ page: currentPage - 1 });
     } else {
       // TODO: answer here
+      setCurrentPage(currentPage + 1);
+      setSearchParams({ page: currentPage + 1 })
     }
   };
 
   return (
     <HStack>
       {/* TODO: render Prev and Next button */}
+      <Button onClick={() => moveTo('prev')} disabled={currentPage == 1}>{'< Prev'}</Button>
+      <Button onClick={() => moveTo('next')}>{'Next >'}</Button>
       {/* TODO: answer here */}
     </HStack>
   );
 };
 
 const PokemonList = ({ pokemons }) => {
+  console.log(pokemons);
   return (
     pokemons &&
     pokemons.length > 0 && (
       <Box role="pokemon-list">
         {pokemons.map((pokemon) => (
           <Link key={pokemon.id} to={`/pokemon/${pokemon.id}`}>
-            <Card>
+            <Card padding={3}>
               <CardHeader>
                 <Heading as="h3" size="md">
                   {pokemon.name}
                 </Heading>
               </CardHeader>
               {/* TODO: render pokemon images & type here */}
+              <Flex>
+                <Image src={pokemon?.sprites?.front_default} alt='Front Default' /> 
+                <Image src={pokemon?.sprites?.back_default} alt='Back Default' /> 
+                <Image src={pokemon?.sprites?.front_shiny} alt='Front Shiny' /> 
+                <Image src={pokemon?.sprites?.back_shiny} alt='Black Shiny' /> 
+              </Flex>
+              <Flex>
+                {pokemon.types.map((type) => (
+                  <Badge key={type.type.name} marginLeft={1}>{type.type.name}</Badge>
+                ))}
+              </Flex>
               {/* TODO: answer here */}
             </Card>
           </Link>

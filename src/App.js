@@ -32,7 +32,13 @@ const App = () => {
         <Route path="/" element={<Home />} />
         {/* TODO: answer here */}
         <Route path="pokemon" element={<Pokemon />} />
+        <Route path="pokemon/:pokemonId" element={<PokemonDetail />} />
         <Route path="unauthorized" element={<Unauthorized />} />
+        <Route path="legend" element={
+          <ProtectedRoute>
+            <PokemonLegend />
+          </ProtectedRoute>
+        } />
       </Routes>
     </Container>
   );

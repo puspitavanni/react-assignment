@@ -18,14 +18,21 @@ const Pagination = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(1); // TODO: replace this
 
+  useEffect(() => {
+    if (searchParams) {
+      const page = parseInt(searchParams.get("page") || 1);
+      setCurrentPage(page);
+    }
+  }, [searchParams])
+
   const moveTo = (direction) => {
     if (direction === "prev") {
       // TODO: answer here
-      setCurrentPage(currentPage - 1);
+      // setCurrentPage(currentPage - 1);
       setSearchParams({ page: currentPage - 1 });
     } else {
       // TODO: answer here
-      setCurrentPage(currentPage + 1);
+      // setCurrentPage(currentPage + 1);
       setSearchParams({ page: currentPage + 1 })
     }
   };
@@ -59,7 +66,7 @@ const PokemonList = ({ pokemons }) => {
                 <Image src={pokemon?.sprites?.front_default} alt='Front Default' /> 
                 <Image src={pokemon?.sprites?.back_default} alt='Back Default' /> 
                 <Image src={pokemon?.sprites?.front_shiny} alt='Front Shiny' /> 
-                <Image src={pokemon?.sprites?.back_shiny} alt='Black Shiny' /> 
+                <Image src={pokemon?.sprites?.back_shiny} alt='Back Shiny' /> 
               </Flex>
               <Flex>
                 {pokemon.types.map((type) => (
